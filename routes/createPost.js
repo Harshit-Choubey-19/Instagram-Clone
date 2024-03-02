@@ -119,7 +119,7 @@ router.put("/comment", requireLogin, (req, res) => {
 // API to delete post
 router.delete("/deletepost/:postId", requireLogin, (req, res) => {
   POST.findOne({ _id: req.params.postId })
-    .populate("postedBy", "_id")
+    .populate("postedBy", "_id name userName Photo")
     .then((post, err) => {
       if (post.postedBy._id.toString() === req.user._id.toString()) {
         post

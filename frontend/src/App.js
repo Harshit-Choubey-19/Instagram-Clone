@@ -13,6 +13,7 @@ import { LoginContext } from "./context/LoginContext.jsx";
 import Modal from "./components/Modal.jsx";
 import UserProfile from "./components/UserProfile.jsx";
 import MyFollowingPosts from "./screens/MyFollowingPosts.jsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -21,26 +22,29 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <LoginContext.Provider value={{ setUserLogin, setModalOpen }}>
-          <Navbar login={userLogin} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route exact path="/profile" element={<Profile />} />
-            <Route path="/createPost" element={<Createpost />} />
-            <Route path="/profile/:userId" element={<UserProfile />} />
-            <Route path="followingpost" element={<MyFollowingPosts />} />
-          </Routes>
-          <ToastContainer theme="dark" />
+        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+          ...
+          <LoginContext.Provider value={{ setUserLogin, setModalOpen }}>
+            <Navbar login={userLogin} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route path="/createPost" element={<Createpost />} />
+              <Route path="/profile/:userId" element={<UserProfile />} />
+              <Route path="followingpost" element={<MyFollowingPosts />} />
+            </Routes>
+            <ToastContainer theme="dark" />
 
-          {modalOpen && (
-            <Modal
-              setUserLogin={setUserLogin}
-              setModalOpen={setModalOpen}
-            ></Modal>
-          )}
-        </LoginContext.Provider>
+            {modalOpen && (
+              <Modal
+                setUserLogin={setUserLogin}
+                setModalOpen={setModalOpen}
+              ></Modal>
+            )}
+          </LoginContext.Provider>
+        </GoogleOAuthProvider>
       </div>
     </BrowserRouter>
   );

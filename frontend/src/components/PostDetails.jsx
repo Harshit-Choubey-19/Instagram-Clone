@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 export default function PostDetails({ item, toggleDetails }) {
   const navigate = useNavigate();
 
+  var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png";
+
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
 
@@ -45,7 +47,7 @@ export default function PostDetails({ item, toggleDetails }) {
             {/* card pic */}
             <div className="card-pic">
               <img
-                src="https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+                src={item.postedBy.Photo ? item.postedBy.Photo : picLink}
                 alt=""
               />
             </div>
