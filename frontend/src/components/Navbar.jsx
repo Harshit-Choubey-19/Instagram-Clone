@@ -18,11 +18,11 @@ function Navbar({ login }) {
           <Link to="/followingpost">
             <li className="hov">My Following Post</li>
           </Link>
-          <Link to="/profile">
-            <li className="hov">Profile</li>
-          </Link>
           <Link to="/createPost">
             <li className="hov">Create Post</li>
+          </Link>
+          <Link to="/profile">
+            <li className="hov">Profile</li>
           </Link>
           <Link to="">
             <button
@@ -50,9 +50,63 @@ function Navbar({ login }) {
     }
   };
 
+  const loginStatusMobile = () => {
+    const token = localStorage.getItem("jwt");
+    if (login || token) {
+      return [
+        <>
+          <Link to="/">
+            <li className="hov">
+              <span className="material-symbols-outlined">home</span>
+            </li>
+          </Link>
+
+          <Link to="/followingpost">
+            <li className="hov">
+              <span className="material-symbols-outlined">explore</span>
+            </li>
+          </Link>
+          <Link to="/createPost">
+            <li className="hov">
+              <span className="material-symbols-outlined">add_box</span>
+            </li>
+          </Link>
+          <Link to="/profile">
+            <li className="hov">
+              <span className="material-symbols-outlined">account_circle</span>
+            </li>
+          </Link>
+
+          <Link to="">
+            <li
+              className="prim-btn"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              <span className="material-symbols-outlined">logout</span>
+            </li>
+          </Link>
+        </>,
+      ];
+    } else {
+      return [
+        <>
+          <Link to="/signup">
+            <li className="hov">SignUp</li>
+          </Link>
+          <Link to="/signin">
+            <li className="hov">SignIn</li>
+          </Link>
+        </>,
+      ];
+    }
+  };
+
   return (
     <div className="navbar">
       <img
+        id="insta-logo"
         src={logo}
         alt=""
         onClick={() => {
@@ -62,6 +116,7 @@ function Navbar({ login }) {
       />
 
       <ul className="nav-menu">{loginStatus()}</ul>
+      <ul className="nav-mobile">{loginStatusMobile()}</ul>
     </div>
   );
 }
