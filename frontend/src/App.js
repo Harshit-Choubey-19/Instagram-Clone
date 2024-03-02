@@ -23,7 +23,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-          ...
           <LoginContext.Provider value={{ setUserLogin, setModalOpen }}>
             <Navbar login={userLogin} />
             <Routes>

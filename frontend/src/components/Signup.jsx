@@ -71,7 +71,7 @@ function Signup() {
       },
       body: JSON.stringify({
         name: jwtDetails.name,
-        userName: jwtDetails.name,
+        userName: jwtDetails.given_name,
         email: jwtDetails.email,
         email_verified: jwtDetails.email_verified,
         clientId: credentialResponse.clientId,
@@ -164,7 +164,7 @@ function Signup() {
               postData();
             }}
           />
-          <hr />
+          <hr style={{ width: "80%" }} />
           <GoogleLogin
             onSuccess={(credentialResponse) => {
               continueWithGoogle(credentialResponse);

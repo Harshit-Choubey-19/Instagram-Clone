@@ -81,11 +81,12 @@ router.post("/googleLogin", (req, res) => {
         console.log({ token, user: { _id, name, email, userName } });
       } else {
         const password = email + clientId;
-        // const userName = "_" + given_name;
+        blankUserName = userName.replace(/\s/g, "");
+        const googleUserName = "_" + blankUserName;
         const user = new USER({
           name,
           email,
-          userName,
+          userName: googleUserName,
           password: password,
           Photo,
         });
