@@ -164,14 +164,14 @@ function Home() {
                 <Link to={`/profile/${posts.postedBy._id}`}>
                   {posts.postedBy.userName}
                   &nbsp;
-                  <span
+                  {/* <span
                     style={{
                       fontWeight: "400",
                       fontStyle: "italic",
                     }}
                   >
                     @{posts.postedBy.name}
-                  </span>
+                  </span> */}
                 </Link>
               </h5>
             </div>
