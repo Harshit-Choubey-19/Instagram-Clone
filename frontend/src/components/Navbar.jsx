@@ -79,7 +79,7 @@ function Navbar({ login }) {
 
           <Link to="">
             <li
-              className="prim-btn"
+              className="hov"
               onClick={() => {
                 setModalOpen(true);
               }}
