@@ -239,7 +239,7 @@ function Home() {
                 {/* card pic */}
                 <div className="card-pic">
                   <img
-                    src="https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg"
+                    src={item.postedBy.Photo ? item.postedBy.Photo : picLink}
                     alt=""
                   />
                 </div>
