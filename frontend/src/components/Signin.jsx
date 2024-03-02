@@ -4,6 +4,8 @@ import logo from "../image/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoginContext } from "../context/LoginContext";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 function Signin() {
   const { setUserLogin } = useContext(LoginContext);
@@ -33,6 +35,38 @@ function Signin() {
       body: JSON.stringify({
         email: email,
         password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          notifyA(data.error);
+        } else {
+          notifyB("Signed in successfully");
+          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          setUserLogin(true);
+          navigate("/");
+        }
+        console.log(data);
+      });
+  };
+
+  const continueWithGoogle = (credentialResponse) => {
+    const jwtDetails = jwtDecode(credentialResponse.credential);
+    console.log(jwtDetails);
+    fetch("/googleLogin", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: jwtDetails.name,
+        userName: jwtDetails.given_name,
+        email: jwtDetails.email,
+        email_verified: jwtDetails.email_verified,
+        clientId: credentialResponse.clientId,
+        Photo: jwtDetails.picture,
       }),
     })
       .then((res) => res.json())
@@ -86,6 +120,16 @@ function Signin() {
               postData();
             }}
             value="Sign In"
+          />
+          <p>or</p>
+          <hr style={{ width: "80%" }} />
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              continueWithGoogle(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
           />
         </div>
         <div className="loginForm-2">

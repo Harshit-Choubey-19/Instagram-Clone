@@ -164,6 +164,7 @@ function Signup() {
               postData();
             }}
           />
+          <p>or</p>
           <hr style={{ width: "80%" }} />
           <GoogleLogin
             onSuccess={(credentialResponse) => {
@@ -173,7 +174,6 @@ function Signup() {
               console.log("Login Failed");
             }}
           />
-          ;
         </div>
         <div className="form-2">
           Already have an account?

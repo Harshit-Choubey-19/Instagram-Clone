@@ -13,6 +13,9 @@ function Home() {
   const [show, setShow] = useState(false);
   const [item, setItem] = useState([]);
 
+  let limit = 10;
+  let skip = 0;
+
   const notifyA = (msg) => toast.error(msg);
   const notifyB = (msg) => toast.success(msg);
 
@@ -21,19 +24,37 @@ function Home() {
     if (!token) {
       navigate("./signin");
     }
+    fetchPosts();
 
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const fetchPosts = () => {
     // Fetching all posts
-    fetch("/allposts", {
+    fetch(`/allposts?limit=${limit}&skip=${skip}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
     })
       .then((res) => res.json())
       .then((result) => {
-        setData(result);
+        setData((data) => [...data, ...result]);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
+
+  const handleScroll = () => {
+    if (
+      document.documentElement.clientHeight + window.pageYOffset >=
+      document.documentElement.scrollHeight
+    ) {
+      skip = skip + 10;
+      fetchPosts();
+    }
+  };
 
   //to show and hide comments
   const toggleComment = (posts) => {
