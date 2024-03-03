@@ -7,20 +7,12 @@ const POST = mongoose.model("POST");
 //Routes
 
 router.get("/allposts", requireLogin, (req, res) => {
-  let limit = req.query.limit;
-  let skip = req.query.skip;
   POST.find()
     .populate("postedBy", "_id name userName Photo")
     .populate("comments.postedBy", "_id name userName")
-    .skip(parseInt(skip))
-    .limit(parseInt(limit))
     .sort("-createdAt")
-    .then((posts) => {
-      res.json(posts);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then((posts) => res.json(posts))
+    .catch((err) => console.log(err));
 });
 
 router.post("/createPost", requireLogin, (req, res) => {
